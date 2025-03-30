@@ -343,6 +343,29 @@
             border-color: rgba(255, 255, 255, 0.1);
         }
         
+        /* Materials calculator styles */
+        .quantity-calculator {
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .quantity-calculator:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        .materials-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 5px;
+        }
+        
+        .materials-list .list-group-item {
+            transition: background-color 0.2s ease;
+        }
+        
+        .materials-list .list-group-item:hover {
+            background-color: rgba(var(--primary-color-rgb), 0.05);
+        }
+        
         .recipe-legend {
             margin-top: 20px;
             padding: 15px;
@@ -617,7 +640,7 @@
                                     </div>
                                     
                                     <!-- Quantity Calculator -->
-                                    <div class="quantity-calculator p-3 mb-3" style="background-color: var(--bg-color); border-radius: 8px;">
+                                    <div class="quantity-calculator p-3 mb-3" style="background-color: var(--bg-color); border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                         <h5><i class="bi bi-calculator me-2"></i>Recipe Calculator</h5>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text">Quantity</span>
@@ -626,7 +649,7 @@
                                         </div>
                                         <div id="materials-${drugName.replace(/\s+/g, '-').toLowerCase()}" class="mt-3">
                                             <h6>Raw Materials Needed:</h6>
-                                            <ul class="list-group">
+                                            <ul class="list-group materials-list">
                                                 ${generateInitialMaterialsList(recipeTree)}
                                             </ul>
                                         </div>
@@ -661,6 +684,11 @@
                     `;
                 });
                 
+                // If no materials found, show a message
+                if (Object.keys(materials).length === 0) {
+                    html = '<li class="list-group-item">No basic materials found</li>';
+                }
+                
                 return html;
             }
             
@@ -679,8 +707,15 @@
                 } else if (recipeTree.components && recipeTree.components.length > 0) {
                     // This is a complex component, process its sub-components
                     recipeTree.components.forEach(component => {
+                        // Create a new visited set for each branch to allow components to be reused in different branches
+                        // but prevent infinite recursion within a single branch
                         collectBasicMaterials(component, quantity, materials, new Set(visited));
                     });
+                } else if (!recipeTree.components || recipeTree.components.length === 0) {
+                    // If no components are defined but it's not marked as basic, treat it as a basic component
+                    if (!recipeTree.isCircular) {
+                        materials[recipeTree.name] = (materials[recipeTree.name] || 0) + quantity;
+                    }
                 }
                 
                 return materials;
@@ -692,7 +727,10 @@
                 const quantityInput = document.getElementById(`quantity-${drugId}`);
                 const materialsContainer = document.getElementById(`materials-${drugId}`);
                 
-                if (!quantityInput || !materialsContainer) return;
+                if (!quantityInput || !materialsContainer) {
+                    console.error(`Could not find elements for drug: ${drugName}`);
+                    return;
+                }
                 
                 const quantity = parseInt(quantityInput.value) || 1;
                 const recipeTree = buildRecipeTree(drugName);
@@ -701,21 +739,71 @@
                 let html = `<h6>Raw Materials Needed for ${quantity} ${drugName}:</h6><ul class="list-group">`;
                 
                 // Sort materials alphabetically
-                Object.keys(materials).sort().forEach(material => {
-                    html += `
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            ${material}
-                            <span class="badge bg-primary rounded-pill">${materials[material]}</span>
-                        </li>
-                    `;
-                });
+                const sortedMaterials = Object.keys(materials).sort();
+                
+                if (sortedMaterials.length === 0) {
+                    html += '<li class="list-group-item">No basic materials found</li>';
+                } else {
+                    sortedMaterials.forEach(material => {
+                        html += `
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                ${material}
+                                <span class="badge bg-primary rounded-pill">${materials[material]}</span>
+                            </li>
+                        `;
+                    });
+                }
                 
                 html += '</ul>';
                 materialsContainer.innerHTML = html;
+                
+                // Log for debugging
+                console.log(`Calculated materials for ${quantity} ${drugName}:`, materials);
+            }
+            
+            // Calculate materials in the modal based on quantity
+            function calculateModalMaterials(drugName) {
+                const drugId = drugName.replace(/\s+/g, '-').toLowerCase();
+                const quantityInput = document.getElementById(`modal-quantity-${drugId}`);
+                const materialsContainer = document.getElementById(`modal-materials-${drugId}`);
+                
+                if (!quantityInput || !materialsContainer) {
+                    console.error(`Could not find modal elements for drug: ${drugName}`);
+                    return;
+                }
+                
+                const quantity = parseInt(quantityInput.value) || 1;
+                const recipeTree = buildRecipeTree(drugName);
+                const materials = collectBasicMaterials(recipeTree, quantity);
+                
+                let html = `<h6>Raw Materials Needed for ${quantity} ${drugName}:</h6><ul class="list-group materials-list">`;
+                
+                // Sort materials alphabetically
+                const sortedMaterials = Object.keys(materials).sort();
+                
+                if (sortedMaterials.length === 0) {
+                    html += '<li class="list-group-item">No basic materials found</li>';
+                } else {
+                    sortedMaterials.forEach(material => {
+                        html += `
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                ${material}
+                                <span class="badge bg-primary rounded-pill">${materials[material]}</span>
+                            </li>
+                        `;
+                    });
+                }
+                
+                html += '</ul>';
+                materialsContainer.innerHTML = html;
+                
+                // Log for debugging
+                console.log(`Calculated materials for ${quantity} ${drugName} in modal:`, materials);
             }
             
             // Make functions globally accessible
             window.calculateMaterials = calculateMaterials;
+            window.calculateModalMaterials = calculateModalMaterials;
             window.showRecipeDetails = showRecipeDetails;
 
             // Populate effects filter
@@ -924,6 +1012,7 @@
             function showRecipeDetails(drugName) {
                 const recipeTree = buildRecipeTree(drugName);
                 const drug = findDrugByName(drugName);
+                const drugId = drugName.replace(/\s+/g, '-').toLowerCase();
                 
                 document.getElementById('recipeModalLabel').textContent = `${drugName} - Complete Recipe`;
                 document.getElementById('recipeDetails').innerHTML = `
@@ -936,6 +1025,22 @@
                         
                         <div class="recipe-description">
                             <strong>Base Recipe:</strong> ${drug.Recipe}
+                        </div>
+                        
+                        <!-- Materials Calculator -->
+                        <div class="quantity-calculator p-3 mb-4 mt-4" style="background-color: var(--bg-color); border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                            <h5><i class="bi bi-calculator me-2"></i>Materials Calculator</h5>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Quantity</span>
+                                <input type="number" class="form-control" id="modal-quantity-${drugId}" value="1" min="1" max="100">
+                                <button class="btn btn-primary" onclick="calculateModalMaterials('${drugName}')">Calculate</button>
+                            </div>
+                            <div id="modal-materials-${drugId}" class="mt-3">
+                                <h6>Raw Materials Needed:</h6>
+                                <ul class="list-group materials-list">
+                                    ${generateInitialMaterialsList(recipeTree)}
+                                </ul>
+                            </div>
                         </div>
                         
                         <div class="recipe-grid mt-4">
