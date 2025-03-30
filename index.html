@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule I Drugs Database</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --primary-color-rgb: 108, 92, 231;
+            --secondary-color: #a29bfe;
+            --accent-color: #fd79a8;
+            --dark-color: #2d3436;
+            --light-color: #f5f6fa;
+            --bg-color: #f5f6fa;
+            --text-color: #2d3436;
+            --card-bg: #ffffff;
+            --filter-bg: #ffffff;
+        }
+        
+        [data-theme="dark"] {
+            --primary-color: #5348c7;
+            --primary-color-rgb: 83, 72, 199;
+            --secondary-color: #8a7dfe;
+            --accent-color: #e84393;
+            --dark-color: #f5f6fa;
+            --light-color: #2d3436;
+            --bg-color: #1a1a2e;
+            --text-color: #f5f6fa;
+            --card-bg: #272741;
+            --filter-bg: #272741;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .navbar {
+            background-color: var(--primary-color);
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+        }
+        
+        .nav-link {
+            background-color: var(--primary-color);
+            border-radius: 8px 8px 0 0;
+            margin-right: 5px;
+            color: white;
+        }
+        
+        .nav-link.active {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            border-bottom: none;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .badge {
+            margin-right: 5px;
+            margin-bottom: 5px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .badge-effect {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .price-tag {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .addictiveness {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .recipe {
+            font-style: italic;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        .filters {
+            background-color: var(--filter-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .search-box {
+            position: relative;
+        }
+        .search-box i {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        .search-input {
+            padding-left: 40px;
+            border-radius: 20px;
+        }
+        .sort-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .sort-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        .sort-btn.active {
+            background-color: var(--accent-color);
+        }
+        .effect-filter {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .effect-filter.active {
+            background-color: var(--accent-color);
+        }
+        #effectsList {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        /* Recipe Modal Styles */
+        .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: none;
+            border-radius: 10px;
+        }
+        .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .modal-footer {
+            border-top: none;
+        }
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border: none;
+        }
+        .recipe-grid {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .recipe-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid var(--secondary-color);
+        }
+        .recipe-item.main-component {
+            border: 2px solid var(--primary-color);
+            background-color: rgba(var(--primary-color-rgb, 108, 92, 231), 0.05);
+        }
+        .recipe-item:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        .recipe-item-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+        }
+        .recipe-description {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            color: var(--text-color);
+        }
+        .recipe-components {
+            margin-top: 12px;
+        }
+        .recipe-components-header {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+        }
+        .recipe-component {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .clickable-recipe {
+            cursor: pointer;
+            text-decoration: underline;
+            color: var(--accent-color);
+        }
+        .recipe-note {
+            font-style: italic;
+            margin-top: 12px;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
+        
+        /* Recipe display styles */
+        .recipe-container {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .recipe-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .recipe-description {
+            font-style: italic;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+        }
+        
+        .recipe-components {
+            margin-top: 20px;
+        }
+        
+        .component-item {
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .component-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .component-recipe {
+            padding: 8px;
+            margin-top: 5px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            font-style: italic;
+            color: var(--text-color);
+        }
+        
+        .component-type {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+        
+        .basic-component {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .complex-component {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .circular-reference {
+            background-color: #ffc107;
+            color: black;
+        }
+        
+        /* Dark mode adjustments for recipe calculator */
+        [data-theme="dark"] .recipe-description,
+        [data-theme="dark"] .recipe-component,
+        [data-theme="dark"] .recipe-note {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        [data-theme="dark"] .list-group-item {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .recipe-legend {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .view-recipe-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .view-recipe-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        @media (max-width: 768px) {
+            .filters {
+                padding: 15px;
+            }
+            .sort-btn {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Schedule I Drugs Database</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="form-check form-switch mt-2">
+                            <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                            <label class="form-check-label text-white" for="darkModeToggle">Dark Mode</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="filters">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="search-box">
+                                <i class="bi bi-search"></i>
+                                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search drugs...">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex flex-wrap">
+                                <button class="sort-btn active" data-sort="name">Name</button>
+                                <button class="sort-btn" data-sort="price">Price</button>
+                                <button class="sort-btn" data-sort="addictiveness">Addictiveness</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6>Filter by Effects:</h6>
+                            <div id="effectsList" class="d-flex flex-wrap mt-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab navigation -->
+        <ul class="nav nav-tabs mb-3" id="drugTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-drugs-tab" data-bs-toggle="tab" data-bs-target="#all-drugs-content" type="button" role="tab" aria-controls="all-drugs-content" aria-selected="true">
+                    All Drugs
+                </button>
+            </li>
+            <!-- Individual drug tabs will be added dynamically -->
+        </ul>
+
+        <!-- Tab content -->
+        <div class="tab-content" id="drugTabsContent">
+            <div class="tab-pane fade show active" id="all-drugs-content" role="tabpanel" aria-labelledby="all-drugs-tab">
+                <div class="row" id="drugsContainer">
+                    <!-- Drug cards will be dynamically inserted here -->
+                </div>
+            </div>
+            <!-- Individual drug tab content will be added dynamically -->
+        </div>
+    </div>
+
+    <!-- Recipe Modal -->
+    <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recipeModalLabel">Drug Recipe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="recipeDetails"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2023 Schedule I Drugs Database</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>Data sourced from reference.xlsx</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dark mode toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            
+            // Check for saved theme preference or use preferred color scheme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                darkModeToggle.checked = true;
+            }
+            
+            // Toggle dark/light mode
+            darkModeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let drugsData = [];
+            let allEffects = new Set();
+            let activeEffectFilters = new Set();
+            let currentSort = 'name';
+            let sortDirection = 'asc';
+            const recipeModal = new bootstrap.Modal(document.getElementById('recipeModal'));
+
+            // Fetch the JSON data
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    drugsData = data;
+                    
+                    // Extract all unique effects
+                    drugsData.forEach(drug => {
+                        if (drug.Effects && drug.Effects !== 'NaN') {
+                            const effectsArray = drug.Effects.split(', ');
+                            effectsArray.forEach(effect => allEffects.add(effect));
+                        }
+                    });
+                    
+                    // Populate effects filter
+                    populateEffectsFilter();
+                    
+                    // Create drug tabs
+                    createDrugTabs();
+                    
+                    // Display drugs
+                    displayDrugs();
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById('drugsContainer').innerHTML = `
+                        <div class="col-12 text-center">
+                            <div class="alert alert-danger">Failed to load drug data. Please try again later.</div>
+                        </div>
+                    `;
+                });
+                
+            // Create tabs for each drug
+            function createDrugTabs() {
+                const tabList = document.getElementById('drugTabs');
+                const tabContent = document.getElementById('drugTabsContent');
+                
+                // Sort drugs by name for consistent tab order
+                drugsData.sort((a, b) => a['Drug Name'].localeCompare(b['Drug Name'])).forEach(drug => {
+                    const drugName = drug['Drug Name'];
+                    const drugId = drugName.replace(/\s+/g, '-').toLowerCase();
+                    
+                    // Create tab
+                    const tabItem = document.createElement('li');
+                    tabItem.className = 'nav-item';
+                    tabItem.setAttribute('role', 'presentation');
+                    tabItem.innerHTML = `
+                        <button class="nav-link" id="${drugId}-tab" data-bs-toggle="tab" data-bs-target="#${drugId}-content" 
+                                type="button" role="tab" aria-controls="${drugId}-content" aria-selected="false">
+                            ${drugName}
+                        </button>
+                    `;
+                    tabList.appendChild(tabItem);
+                    
+                    // Create tab content
+                    const tabPane = document.createElement('div');
+                    tabPane.className = 'tab-pane fade';
+                    tabPane.id = `${drugId}-content`;
+                    tabPane.setAttribute('role', 'tabpanel');
+                    tabPane.setAttribute('aria-labelledby', `${drugId}-tab`);
+                    
+                    // Create recipe content
+                    tabPane.innerHTML = createDrugTabContent(drug);
+                    tabContent.appendChild(tabPane);
+                });
+            }
+            
+            // Create content for each drug tab
+            function createDrugTabContent(drug) {
+                const drugName = drug['Drug Name'];
+                const recipeTree = buildRecipeTree(drugName);
+                
+                // Generate HTML for the drug tab content
+                let html = `
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0"><i class="bi bi-flask-fill me-2"></i>${drugName}</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <span class="price-tag mb-2">$${drug.Price}</span>
+                                        <span class="ms-2 addictiveness">Addictiveness: ${drug.Addictiveness}</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <strong>Effects:</strong>
+                                        <div class="mt-2">
+                                            ${drug.Effects && drug.Effects !== 'NaN' 
+                                                ? drug.Effects.split(', ').map(effect => 
+                                                    `<span class="badge badge-effect">${effect}</span>`
+                                                ).join('') 
+                                                : '<span class="badge bg-secondary">No effects listed</span>'}
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <strong>Base Recipe:</strong>
+                                        <p class="recipe mt-1">${drug.Recipe}</p>
+                                    </div>
+                                    
+                                    <!-- Quantity Calculator -->
+                                    <div class="quantity-calculator p-3 mb-3" style="background-color: var(--bg-color); border-radius: 8px;">
+                                        <h5><i class="bi bi-calculator me-2"></i>Recipe Calculator</h5>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">Quantity</span>
+                                            <input type="number" class="form-control" id="quantity-${drugName.replace(/\s+/g, '-').toLowerCase()}" value="1" min="1" max="100">
+                                            <button class="btn btn-primary" onclick="calculateMaterials('${drugName}')">Calculate</button>
+                                        </div>
+                                        <div id="materials-${drugName.replace(/\s+/g, '-').toLowerCase()}" class="mt-3">
+                                            <h6>Raw Materials Needed:</h6>
+                                            <ul class="list-group">
+                                                ${generateInitialMaterialsList(recipeTree)}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="mb-3">Complete Recipe Breakdown</h5>
+                                    <div class="recipe-grid">
+                                        ${generateRecipeComponentsHtml(recipeTree)}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                return html;
+            }
+            
+            // Generate initial materials list with quantity 1
+            function generateInitialMaterialsList(recipeTree) {
+                const materials = collectBasicMaterials(recipeTree, 1);
+                let html = '';
+                
+                // Sort materials alphabetically
+                Object.keys(materials).sort().forEach(material => {
+                    html += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            ${material}
+                            <span class="badge bg-primary rounded-pill">${materials[material]}</span>
+                        </li>
+                    `;
+                });
+                
+                return html;
+            }
+            
+            // Collect all basic materials needed for a recipe
+            function collectBasicMaterials(recipeTree, quantity = 1, materials = {}, visited = new Set()) {
+                // Prevent infinite recursion with circular references
+                if (visited.has(recipeTree.name.toLowerCase())) {
+                    return materials;
+                }
+                
+                visited.add(recipeTree.name.toLowerCase());
+                
+                if (recipeTree.isBasic) {
+                    // This is a basic component, add it to materials
+                    materials[recipeTree.name] = (materials[recipeTree.name] || 0) + quantity;
+                } else if (recipeTree.components && recipeTree.components.length > 0) {
+                    // This is a complex component, process its sub-components
+                    recipeTree.components.forEach(component => {
+                        collectBasicMaterials(component, quantity, materials, new Set(visited));
+                    });
+                }
+                
+                return materials;
+            }
+            
+            // Calculate materials based on quantity
+            function calculateMaterials(drugName) {
+                const drugId = drugName.replace(/\s+/g, '-').toLowerCase();
+                const quantityInput = document.getElementById(`quantity-${drugId}`);
+                const materialsContainer = document.getElementById(`materials-${drugId}`);
+                
+                if (!quantityInput || !materialsContainer) return;
+                
+                const quantity = parseInt(quantityInput.value) || 1;
+                const recipeTree = buildRecipeTree(drugName);
+                const materials = collectBasicMaterials(recipeTree, quantity);
+                
+                let html = `<h6>Raw Materials Needed for ${quantity} ${drugName}:</h6><ul class="list-group">`;
+                
+                // Sort materials alphabetically
+                Object.keys(materials).sort().forEach(material => {
+                    html += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            ${material}
+                            <span class="badge bg-primary rounded-pill">${materials[material]}</span>
+                        </li>
+                    `;
+                });
+                
+                html += '</ul>';
+                materialsContainer.innerHTML = html;
+            }
+            
+            // Make functions globally accessible
+            window.calculateMaterials = calculateMaterials;
+            window.showRecipeDetails = showRecipeDetails;
+
+            // Populate effects filter
+            function populateEffectsFilter() {
+                const effectsList = document.getElementById('effectsList');
+                effectsList.innerHTML = '';
+                
+                Array.from(allEffects).sort().forEach(effect => {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge badge-effect effect-filter me-2 mb-2';
+                    badge.textContent = effect;
+                    badge.addEventListener('click', function() {
+                        toggleEffectFilter(effect, this);
+                    });
+                    effectsList.appendChild(badge);
+                });
+            }
+
+            // Toggle effect filter
+            function toggleEffectFilter(effect, element) {
+                if (activeEffectFilters.has(effect)) {
+                    activeEffectFilters.delete(effect);
+                    element.classList.remove('active');
+                } else {
+                    activeEffectFilters.add(effect);
+                    element.classList.add('active');
+                }
+                displayDrugs();
+            }
+
+            // Parse recipe to find components
+            function parseRecipe(recipeText) {
+                if (!recipeText || recipeText === 'NaN') return [];
+                
+                // Common patterns in recipes
+                const patterns = [
+                    /requires\s+([\w\s]+)\s+which\s+you\s+create\s+with\s+([\w\s,]+)/i,  // "requires X which you create with Y and Z"
+                    /made\s+with\s+([\w\s,]+)/i,  // "made with X, Y, and Z"
+                    /created\s+using\s+([\w\s,]+)/i,  // "created using X, Y"
+                    /mix\s+([\w\s,]+)/i,  // "mix X and Y"
+                    /combine\s+([\w\s,]+)/i  // "combine X and Y"
+                ];
+                
+                let components = [];
+                
+                // Try each pattern
+                for (const pattern of patterns) {
+                    const match = recipeText.match(pattern);
+                    if (match) {
+                        if (pattern.toString().includes('requires')) {
+                            // Handle "requires X which you create with Y and Z" pattern
+                            const mainComponent = match[1].trim();
+                            const subComponents = match[2].split(/,|\sand\s|\s\+\s/).map(c => c.trim()).filter(c => c);
+                            components.push(mainComponent);
+                            components = components.concat(subComponents);
+                        } else {
+                            // Handle other patterns
+                            const ingredientList = match[1];
+                            const ingredients = ingredientList.split(/,|\sand\s|\s\+\s/).map(i => i.trim()).filter(i => i);
+                            components = components.concat(ingredients);
+                        }
+                        break;
+                    }
+                }
+                
+                // If no pattern matched, try a simple split on common separators
+                if (components.length === 0) {
+                    components = recipeText.split(/,|\sand\s|\s\+\s/).map(i => i.trim()).filter(i => i);
+                }
+                
+                return components;
+            }
+
+            // Find a drug by name
+            function findDrugByName(name) {
+                return drugsData.find(drug => drug['Drug Name'].toLowerCase() === name.toLowerCase());
+            }
+
+            // Build recipe tree
+            function buildRecipeTree(drugName, visited = new Set()) {
+                // Prevent infinite recursion
+                if (visited.has(drugName.toLowerCase())) {
+                    return { name: drugName, components: [], isCircular: true };
+                }
+                
+                visited.add(drugName.toLowerCase());
+                
+                const drug = findDrugByName(drugName);
+                if (!drug) return { name: drugName, components: [], isBasic: true };
+                
+                const components = parseRecipe(drug.Recipe);
+                const recipeTree = {
+                    name: drug['Drug Name'],
+                    recipe: drug.Recipe,
+                    components: []
+                };
+                
+                for (const component of components) {
+                    recipeTree.components.push(buildRecipeTree(component, new Set(visited)));
+                }
+                
+                return recipeTree;
+            }
+
+            // Generate HTML for recipe components in a grid layout
+            function generateRecipeComponentsHtml(recipeTree) {
+                let html = '';
+                let processedComponents = new Set();
+                let allComponents = [];
+                
+                // Helper function to collect all components into a flat array
+                function collectAllComponents(component, isMainComponent = false) {
+                    // Skip if already processed to avoid duplicates
+                    if (processedComponents.has(component.name.toLowerCase())) {
+                        return;
+                    }
+                    
+                    // Mark as processed
+                    processedComponents.add(component.name.toLowerCase());
+                    
+                    // Add this component to our flat list
+                    allComponents.push({
+                        ...component,
+                        isMainComponent: isMainComponent
+                    });
+                    
+                    // Recursively collect all sub-components
+                    if (!component.isBasic && !component.isCircular && component.components && component.components.length > 0) {
+                        component.components.forEach(subComponent => {
+                            collectAllComponents(subComponent, false);
+                        });
+                    }
+                }
+                
+                // First, collect all components into a flat array
+                recipeTree.components.forEach(component => {
+                    collectAllComponents(component, true);
+                });
+                
+                // Then, generate HTML for each component in the flat array
+                allComponents.forEach(component => {
+                    let componentTypeClass = '';
+                    let componentTypeLabel = '';
+                    
+                    if (component.isCircular) {
+                        componentTypeClass = 'circular-reference';
+                        componentTypeLabel = 'Circular Reference';
+                    } else if (component.isBasic) {
+                        componentTypeClass = 'basic-component';
+                        componentTypeLabel = 'Basic Component';
+                    } else {
+                        componentTypeClass = 'complex-component';
+                        componentTypeLabel = 'Complex Component';
+                    }
+                    
+                    html += `
+                    <div class="recipe-item ${component.isMainComponent ? 'main-component' : ''}">
+                        <div class="recipe-item-name">
+                            <i class="bi bi-flask-fill me-2"></i>
+                            ${component.name}
+                        </div>
+                        <span class="badge ${componentTypeClass} mb-2">${componentTypeLabel}</span>`;
+                    
+                    if (component.recipe) {
+                        html += `
+                        <div class="recipe-description">
+                            <strong>Recipe:</strong> ${component.recipe}
+                        </div>`;
+                    }
+                    
+                    if (component.isCircular) {
+                        html += `
+                        <div class="alert alert-warning mt-2 mb-0 py-1 px-2">
+                            <small><i class="bi bi-exclamation-triangle-fill me-1"></i> This component appears elsewhere in the recipe</small>
+                        </div>`;
+                    } else if (!component.isBasic && component.components && component.components.length > 0) {
+                        // For complex components, just list the direct ingredients names
+                        html += `
+                        <div class="recipe-components">
+                            <div class="recipe-components-header">
+                                <i class="bi bi-diagram-3-fill me-1"></i> Ingredients:
+                            </div>`;
+                            
+                        component.components.forEach(subComponent => {
+                            html += `
+                            <div class="recipe-component">
+                                <i class="bi bi-arrow-right-circle me-1"></i> ${subComponent.name}
+                            </div>`;
+                        });
+                        
+                        html += `</div>`;
+                    }
+                    
+                    html += `</div>`;
+                });
+                
+                // If no components, show a message
+                if (allComponents.length === 0) {
+                    html = `<div class="alert alert-info">No recipe components found.</div>`;
+                }
+                
+                return html;
+            }
+
+            // Show recipe details in modal
+            function showRecipeDetails(drugName) {
+                const recipeTree = buildRecipeTree(drugName);
+                const drug = findDrugByName(drugName);
+                
+                document.getElementById('recipeModalLabel').textContent = `${drugName} - Complete Recipe`;
+                document.getElementById('recipeDetails').innerHTML = `
+                    <div class="recipe-container">
+                        <div class="recipe-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="bi bi-flask-fill me-2"></i>${drugName}
+                            </div>
+                        </div>
+                        
+                        <div class="recipe-description">
+                            <strong>Base Recipe:</strong> ${drug.Recipe}
+                        </div>
+                        
+                        <div class="recipe-grid mt-4">
+                            ${generateRecipeComponentsHtml(recipeTree)}
+                        </div>
+                        
+                        <div class="recipe-legend mt-4">
+                            <h6>Legend:</h6>
+                            <div class="legend-item">
+                                <span class="badge basic-component me-2">Basic Component</span>
+                                <span>No further processing needed</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="badge complex-component me-2">Complex Component</span>
+                                <span>Requires additional components to create</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="badge circular-reference me-2">Circular Reference</span>
+                                <span>Component appears elsewhere in the recipe</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // No need to initialize mindmap visualization as we're using a grid layout
+                
+                recipeModal.show();
+            }
+
+            // Display drugs based on filters and sorting
+            function displayDrugs() {
+                const container = document.getElementById('drugsContainer');
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                
+                // Filter drugs
+                let filteredDrugs = drugsData.filter(drug => {
+                    // Search filter
+                    const nameMatch = drug['Drug Name'].toLowerCase().includes(searchTerm);
+                    
+                    // Effects filter
+                    let effectsMatch = true;
+                    if (activeEffectFilters.size > 0 && drug.Effects && drug.Effects !== 'NaN') {
+                        const drugEffects = drug.Effects.split(', ');
+                        effectsMatch = Array.from(activeEffectFilters).every(effect => 
+                            drugEffects.includes(effect)
+                        );
+                    }
+                    
+                    return nameMatch && effectsMatch;
+                });
+                
+                // Sort drugs
+                filteredDrugs.sort((a, b) => {
+                    let valueA, valueB;
+                    
+                    if (currentSort === 'name') {
+                        valueA = a['Drug Name'];
+                        valueB = b['Drug Name'];
+                    } else if (currentSort === 'price') {
+                        valueA = a.Price;
+                        valueB = b.Price;
+                    } else if (currentSort === 'addictiveness') {
+                        valueA = parseInt(a.Addictiveness) || 0;
+                        valueB = parseInt(b.Addictiveness) || 0;
+                    }
+                    
+                    if (sortDirection === 'asc') {
+                        return valueA > valueB ? 1 : -1;
+                    } else {
+                        return valueA < valueB ? 1 : -1;
+                    }
+                });
+                
+                // Display drugs
+                container.innerHTML = '';
+                
+                if (filteredDrugs.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-12 text-center">
+                            <div class="alert alert-info">No drugs match your search criteria.</div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                filteredDrugs.forEach(drug => {
+                    const effectsHtml = drug.Effects && drug.Effects !== 'NaN' 
+                        ? drug.Effects.split(', ').map(effect => 
+                            `<span class="badge badge-effect">${effect}</span>`
+                        ).join('') 
+                        : '<span class="badge bg-secondary">No effects listed</span>';
+                    
+                    const drugCard = document.createElement('div');
+                    drugCard.className = 'col-md-6 col-lg-4 mb-4';
+                    drugCard.innerHTML = `
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">${drug['Drug Name']}</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <span class="price-tag mb-2">$${drug.Price}</span>
+                                    <span class="ms-2 addictiveness">Addictiveness: ${drug.Addictiveness}</span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Effects:</strong>
+                                    <div class="mt-2">${effectsHtml}</div>
+                                </div>
+                                <div>
+                                    <strong>Recipe:</strong>
+                                    <p class="recipe mt-1">${drug.Recipe}</p>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 text-end">
+                                <button class="btn view-recipe-btn" data-drug="${drug['Drug Name']}">Show Full Recipe</button>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(drugCard);
+                });
+                
+                // Add event listeners to recipe buttons
+                document.querySelectorAll('.view-recipe-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const drugName = this.getAttribute('data-drug');
+                        showRecipeDetails(drugName);
+                    });
+                });
+            }
+
+            // Search input event
+            document.getElementById('searchInput').addEventListener('input', function() {
+                displayDrugs();
+            });
+
+            // Sort buttons event
+            document.querySelectorAll('.sort-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const sortBy = this.getAttribute('data-sort');
+                    
+                    // Update active button
+                    document.querySelectorAll('.sort-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Update sort direction if clicking the same sort option
+                    if (currentSort === sortBy) {
+                        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        currentSort = sortBy;
+                        sortDirection = 'asc';
+                    }
+                    
+                    displayDrugs();
+                });
+            });
+        });
+    </script>
+    <!-- Removed mindmap.js reference as we're using grid layout instead -->
+</body>
+</html>

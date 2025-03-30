@@ -1,0 +1,170 @@
+[
+  {
+    "Drug Name": "BioBud",
+    "Price": 213,
+    "Effects": "Munchies, Gingeritis, Energizing, Calorie-Dense, Spicy",
+    "Addictiveness": "100%",
+    "Recipe": "TokyoSplooge + Cuke"
+  },
+  {
+    "Drug Name": "DreamGold",
+    "Price": 185,
+    "Effects": "Gingeritis, Calorie-Dense, Slippery, Spicy, Thought-Provoking",
+    "Addictiveness": "100%",
+    "Recipe": "SuperCake + Motor Oil"
+  },
+  {
+    "Drug Name": "ExtremeGrool",
+    "Price": 140,
+    "Effects": "Gingeritis, Spicy, Jennerising",
+    "Addictiveness": "100%",
+    "Recipe": "ShinyPuke + Chili"
+  },
+  {
+    "Drug Name": "FruityFuel",
+    "Price": 126,
+    "Effects": "Spicy, Jennerising",
+    "Addictiveness": "100%",
+    "Recipe": "MegaSmegma + Iodine"
+  },
+  {
+    "Drug Name": "GirlScoutCheese",
+    "Price": 157,
+    "Effects": "Spicy, Jennerising, Thought-Provoking",
+    "Addictiveness": "100%",
+    "Recipe": "FruityFuel + Addy"
+  },
+  {
+    "Drug Name": "GirlScoutPiss",
+    "Price": 168,
+    "Effects": "Calming, Euphoric, Energizing, Thought-Provoking, Tropic Thunder",
+    "Addictiveness": "100%",
+    "Recipe": "MiracleStink + Cuke"
+  },
+  {
+    "Drug Name": "GranddaddyHaze",
+    "Price": 224,
+    "Effects": "Calming, Energizing, Bright-Eyed, Thought-Provoking, Tropic Thunder",
+    "Addictiveness": "100%",
+    "Recipe": "GirlScoutPiss + Battery"
+  },
+  {
+    "Drug Name": "LAUrkle",
+    "Price": 84,
+    "Effects": "Gingeritis",
+    "Addictiveness": "60%",
+    "Recipe": "Meth + Banana"
+  },
+  {
+    "Drug Name": "MegaSmegma",
+    "Price": 97,
+    "Effects": "Spicy",
+    "Addictiveness": "100%",
+    "Recipe": "Meth + Chili"
+  },
+  {
+    "Drug Name": "MiracleDiesel",
+    "Price": 118,
+    "Effects": "Paranoia, Sneaky, Thought-Provoking",
+    "Addictiveness": "100%",
+    "Recipe": "TokyoCrack + Paracetamol"
+  },
+  {
+    "Drug Name": "MiracleStink",
+    "Price": 140,
+    "Effects": "Calming, Toxic, Thought-Provoking, Tropic Thunder",
+    "Addictiveness": "100%",
+    "Recipe": "MiracleDiesel + Gasoline"
+  },
+  {
+    "Drug Name": "MiracleThunderfuck",
+    "Price": 164,
+    "Effects": "Paranoia, Gingeritis, Foggy, Spicy, Bright-Eyed",
+    "Addictiveness": "100%",
+    "Recipe": "PinkPunch + Battery"
+  },
+  {
+    "Drug Name": "PinkPunch",
+    "Price": 136,
+    "Effects": "Paranoia, Gingeritis, Foggy, Spicy",
+    "Addictiveness": "100%",
+    "Recipe": "ExtremeGrool + MegaBean"
+  },
+  {
+    "Drug Name": "ShinyPuke",
+    "Price": 113,
+    "Effects": "Gingeritis, Jennerising",
+    "Addictiveness": "94%",
+    "Recipe": "LAUrkle + Iodine"
+  },
+  {
+    "Drug Name": "SlimyPuke",
+    "Price": 265,
+    "Effects": "Calming, Energizing, Bright-Eyed, Tropic Thunder, Electrifying",
+    "Addictiveness": "100%",
+    "Recipe": "GranddaddyHaze + HorseSemen"
+  },
+  {
+    "Drug Name": "SuperCake",
+    "Price": 161,
+    "Effects": "Gingeritis, Calorie-Dense, Spicy, Thought-Provoking",
+    "Addictiveness": "100%",
+    "Recipe": "GirlScoutCheese + Donut"
+  },
+  {
+    "Drug Name": "TokyoCrack",
+    "Price": 116,
+    "Effects": "Energizing, Thought-Provoking",
+    "Addictiveness": "100%",
+    "Recipe": "LAUrkle + Cuke"
+  },
+  {
+    "Drug Name": "TokyoSplooge",
+    "Price": 213,
+    "Effects": "Gingeritis, Calorie-Dense, Slippery, Spicy, Bright-Eyed",
+    "Addictiveness": "100%",
+    "Recipe": "DreamGold + Battery"
+  },
+  {
+    "Drug Name": "WeddingBalls",
+    "Price": 246,
+    "Effects": "Munchies, Gingeritis, Energizing, Calorie-Dense, Foggy",
+    "Addictiveness": "100%",
+    "Recipe": "BioBud + MegaBean"
+  },
+  {
+    "Drug Name": "WeddingStink",
+    "Price": 360,
+    "Effects": "Foggy, Bright-Eyed, Tropic Thunder, Glowing, Electrifying",
+    "Addictiveness": "100%",
+    "Recipe": "SlimyPuke + MegaBean"
+  },
+  {
+    "Drug Name": "Meth",
+    "Price": 70,
+    "Effects": "None",
+    "Addictiveness": "60%",
+    "Recipe": "Acid + Phosphorus + Pseudo"
+  },
+  {
+    "Drug Name": "UltraMint",
+    "Price": 98,
+    "Effects": "Bright-Eyed",
+    "Addictiveness": "80%",
+    "Recipe": "Meth + Battery"
+  },
+  {
+    "Drug Name": "DeathExpress",
+    "Price": 70,
+    "Effects": "Toxic",
+    "Addictiveness": "60%",
+    "Recipe": "Meth + Gasoline"
+  },
+  {
+    "Drug Name": "GorillaMint",
+    "Price": 106,
+    "Effects": "Long faced",
+    "Addictiveness": "100%",
+    "Recipe": "Meth + HorseSemen"
+  }
+]
