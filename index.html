@@ -414,6 +414,12 @@
                         <a class="nav-link active" href="#">Home</a>
                     </li>
                     <li class="nav-item">
+                        <div class="btn-group mt-1 me-3" role="group" aria-label="Database Selection">
+                            <button type="button" class="btn btn-sm active" id="methDbBtn" style="background-color: var(--secondary-color); color: white; border: none; border-radius: 20px 0 0 20px; padding: 5px 10px;">Meth Database</button>
+                            <button type="button" class="btn btn-sm" id="weedDbBtn" style="background-color: var(--accent-color); color: white; border: none; border-radius: 0 20px 20px 0; padding: 5px 10px;">Weed Database</button>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div class="form-check form-switch mt-2">
                             <input class="form-check-input" type="checkbox" id="darkModeToggle">
                             <label class="form-check-label text-white" for="darkModeToggle">Dark Mode</label>
@@ -537,39 +543,111 @@
             let activeEffectFilters = new Set();
             let currentSort = 'name';
             let sortDirection = 'asc';
+            let currentDatabase = 'data.json'; // Default to meth database
             const recipeModal = new bootstrap.Modal(document.getElementById('recipeModal'));
 
-            // Fetch the JSON data
-            fetch('data.json')
-                .then(response => response.json())
-                .then(data => {
-                    drugsData = data;
-                    
-                    // Extract all unique effects
-                    drugsData.forEach(drug => {
-                        if (drug.Effects && drug.Effects !== 'NaN') {
-                            const effectsArray = drug.Effects.split(', ');
-                            effectsArray.forEach(effect => allEffects.add(effect));
-                        }
-                    });
-                    
-                    // Populate effects filter
-                    populateEffectsFilter();
-                    
-                    // Create drug tabs
-                    createDrugTabs();
-                    
-                    // Display drugs
-                    displayDrugs();
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    document.getElementById('drugsContainer').innerHTML = `
-                        <div class="col-12 text-center">
-                            <div class="alert alert-danger">Failed to load drug data. Please try again later.</div>
+            // Database selection buttons
+            const methDbBtn = document.getElementById('methDbBtn');
+            const weedDbBtn = document.getElementById('weedDbBtn');
+
+            // Add event listeners for database buttons
+            methDbBtn.addEventListener('click', function() {
+                if (currentDatabase !== 'data.json') {
+                    currentDatabase = 'data.json';
+                    updateActiveDbButton();
+                    loadDatabaseData();
+                }
+            });
+
+            weedDbBtn.addEventListener('click', function() {
+                if (currentDatabase !== 'weed.json') {
+                    currentDatabase = 'weed.json';
+                    updateActiveDbButton();
+                    loadDatabaseData();
+                }
+            });
+
+            // Update active database button
+            function updateActiveDbButton() {
+                methDbBtn.classList.remove('active');
+                weedDbBtn.classList.remove('active');
+                
+                // Reset styles
+                methDbBtn.style.opacity = '0.8';
+                weedDbBtn.style.opacity = '0.8';
+                
+                if (currentDatabase === 'data.json') {
+                    methDbBtn.classList.add('active');
+                    methDbBtn.style.opacity = '1';
+                    methDbBtn.style.fontWeight = 'bold';
+                } else {
+                    weedDbBtn.classList.add('active');
+                    weedDbBtn.style.opacity = '1';
+                    weedDbBtn.style.fontWeight = 'bold';
+                }
+            }
+
+            // Load database data
+            function loadDatabaseData() {
+                // Clear previous data
+                drugsData = [];
+                allEffects = new Set();
+                activeEffectFilters = new Set();
+                
+                // Reset UI elements
+                document.getElementById('effectsList').innerHTML = '';
+                document.getElementById('drugTabs').innerHTML = `
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="all-drugs-tab" data-bs-toggle="tab" data-bs-target="#all-drugs-content" type="button" role="tab" aria-controls="all-drugs-content" aria-selected="true">
+                            All Drugs
+                        </button>
+                    </li>
+                `;
+                document.getElementById('drugTabsContent').innerHTML = `
+                    <div class="tab-pane fade show active" id="all-drugs-content" role="tabpanel" aria-labelledby="all-drugs-tab">
+                        <div class="row" id="drugsContainer">
+                            <div class="col-12 text-center">
+                                <div class="alert alert-info">Loading drug data...</div>
+                            </div>
                         </div>
-                    `;
-                });
+                    </div>
+                `;
+
+                // Fetch the JSON data
+                fetch(currentDatabase)
+                    .then(response => response.json())
+                    .then(data => {
+                        drugsData = data;
+                        
+                        // Extract all unique effects
+                        drugsData.forEach(drug => {
+                            if (drug.Effects && drug.Effects !== 'NaN') {
+                                const effectsArray = drug.Effects.split(', ');
+                                effectsArray.forEach(effect => allEffects.add(effect));
+                            }
+                        });
+                        
+                        // Populate effects filter
+                        populateEffectsFilter();
+                        
+                        // Create drug tabs
+                        createDrugTabs();
+                        
+                        // Display drugs
+                        displayDrugs();
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                        document.getElementById('drugsContainer').innerHTML = `
+                            <div class="col-12 text-center">
+                                <div class="alert alert-danger">Failed to load drug data. Please try again later.</div>
+                            </div>
+                        `;
+                    });
+            }
+
+            // Initial data load
+            loadDatabaseData();
                 
             // Create tabs for each drug
             function createDrugTabs() {
