@@ -187,5 +187,68 @@
     "Effects": "Gingeritis, Athletic, Laxative",
     "Addictiveness": "100%",
     "Recipe": "PinkSplooge + Banana"
+  },
+  {
+    "Drug Name": "BigPunch",
+    "Price": 119,
+    "Effects": "Sneaky, Tropic Thunder",
+    "Addictiveness": "100%",
+    "Recipe": "DeathExpress + Paracetamol"
+  },
+  {
+    "Drug Name": "IslandCrystal",
+    "Price": 119,
+    "Effects": "Sneaky, Toxic, Tropic Thunder",
+    "Addictiveness": "100%",
+    "Recipe": "BigPunch + Gasoline"
+  },
+  {
+    "Drug Name": "SuperBalls",
+    "Price": 148,
+    "Effects": "Toxic, Sneaky, Tropic Thunder, Jennerising",
+    "Addictiveness": "100%",
+    "Recipe": "IslandCrystal + Iodine"
+  },
+  {
+    "Drug Name": "DeathGrool",
+    "Price": 160,
+    "Effects": "Euphoric, Paranoia, Energizing, Jennerising, Tropic Thunder",
+    "Addictiveness": "100%",
+    "Recipe": "SuperBalls + Cuke"
+  },
+  {
+    "Drug Name": "BigCake",
+    "Price": 147,
+    "Effects": "Paranoia, Energizing, Seizure-Inducing, Jennerising, Tropic Thunder",
+    "Addictiveness": "100%",
+    "Recipe": "DeathGrool + Iodine"
+  },
+  {
+    "Drug Name": "GirlScoutThunderfuck",
+    "Price": 202,
+    "Effects": "Munchies, Seizure-Inducing, Slippery, Jennerising, Tropic Thunder",
+    "Addictiveness": "100%",
+    "Recipe": "BigCake + Motor Oil"
+  },
+  {
+    "Drug Name": "PinkThunderfuck",
+    "Price": 230,
+    "Effects": "Munchies, Seizure-Inducing, Slippery, Jennerising, Bright-Eyed",
+    "Addictiveness": "100%",
+    "Recipe": "GirlScoutThunderfuck + Battery"
+  },
+  {
+    "Drug Name": "TokyoQueef",
+    "Price": 260,
+    "Effects": "Munchies, Seizure-Inducing, Slippery, Bright-Eyed, Jennerising, Thought-Provoking, Anti-gravity",
+    "Addictiveness": "100%",
+    "Recipe": "PinkThunderfuck + Addy"
+  },
+  {
+    "Drug Name": "SexyPuke",
+    "Price": 252,
+    "Effects": "Seizure-Inducing, Slippery, Schizophrenic, Bright-Eyed, Jennerising, Thought-Provoking, Tropic Thunder, Anti-gravity",
+    "Addictiveness": "100%",
+    "Recipe": "TokyoQueef + Motor Oil"
   }
 ]
