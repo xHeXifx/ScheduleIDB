@@ -166,5 +166,26 @@
     "Effects": "Long faced",
     "Addictiveness": "100%",
     "Recipe": "Meth + HorseSemen"
+  },
+  {
+    "Drug Name": "ExtremeStink",
+    "Price": 95,
+    "Effects": "Foggy",
+    "Addictiveness": "70%",
+    "Recipe": "Meth + MegaBean"
+  },
+  {
+    "Drug Name": "PinkSplooge",
+    "Price": 92,
+    "Effects": "Laxative, Athletic",
+    "Addictiveness": "100%",
+    "Recipe": "ExtremeStink + EnergyDrink"
+  },
+  {
+    "Drug Name": "ShinyGold",
+    "Price": 106,
+    "Effects": "Gingeritis, Athletic, Laxative",
+    "Addictiveness": "100%",
+    "Recipe": "PinkSplooge + Banana"
   }
 ]
