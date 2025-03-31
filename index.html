@@ -391,12 +391,81 @@
         .view-recipe-btn:hover {
             background-color: var(--secondary-color);
         }
+        
+        /* Database selection button styles */
+        .db-selector-btn {
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: var(--primary-color);
+        }
+        
+        #methDbBtn.active {
+            background-color: var(--secondary-color);
+        }
+        
+        #weedDbBtn.active {
+            background-color: var(--accent-color);
+        }
+        
+        #cokeDbBtn.active {
+            background-color: var(--primary-color);
+        }
+        
+        .db-selector-btn::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        
+        .db-selector-btn:hover::before {
+            width: 100%;
+        }
+        
+        .db-selector-btn.active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+        
+        .db-selector-btn:hover {
+            opacity: 1 !important;
+            transform: translateY(-2px);
+        }
+        
+        .db-selector-btn:first-child {
+            border-radius: 20px 0 0 20px;
+        }
+        
+        .db-selector-btn:last-child {
+            border-radius: 0 20px 20px 0;
+        }
+        
+        /* Database content transition */
+        #drugsContainer {
+            transition: opacity 0.3s ease;
+        }
+        
         @media (max-width: 768px) {
             .filters {
                 padding: 15px;
             }
             .sort-btn {
                 margin-bottom: 10px;
+            }
+            .db-selector-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -415,8 +484,9 @@
                     </li>
                     <li class="nav-item">
                         <div class="btn-group mt-1 me-3" role="group" aria-label="Database Selection">
-                            <button type="button" class="btn btn-sm active" id="methDbBtn" style="background-color: var(--secondary-color); color: white; border: none; border-radius: 20px 0 0 20px; padding: 5px 10px;">Meth Database</button>
-                            <button type="button" class="btn btn-sm" id="weedDbBtn" style="background-color: var(--accent-color); color: white; border: none; border-radius: 0 20px 20px 0; padding: 5px 10px;">Weed Database</button>
+                            <button type="button" class="btn btn-sm db-selector-btn active" id="methDbBtn">Meth Database</button>
+                            <button type="button" class="btn btn-sm db-selector-btn" id="weedDbBtn">Weed Database</button>
+                            <button type="button" class="btn btn-sm db-selector-btn" id="cokeDbBtn">Cocaine Database</button>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -545,17 +615,25 @@
             let sortDirection = 'asc';
             let currentDatabase = 'data.json'; // Default to meth database
             const recipeModal = new bootstrap.Modal(document.getElementById('recipeModal'));
+            
+            // Cache for all database data
+            let databaseCache = {
+                'data.json': null,
+                'weed.json': null,
+                'coke.json': null
+            };
 
             // Database selection buttons
             const methDbBtn = document.getElementById('methDbBtn');
             const weedDbBtn = document.getElementById('weedDbBtn');
+            const cokeDbBtn = document.getElementById('cokeDbBtn');
 
             // Add event listeners for database buttons
             methDbBtn.addEventListener('click', function() {
                 if (currentDatabase !== 'data.json') {
                     currentDatabase = 'data.json';
                     updateActiveDbButton();
-                    loadDatabaseData();
+                    switchDatabase();
                 }
             });
 
@@ -563,61 +641,117 @@
                 if (currentDatabase !== 'weed.json') {
                     currentDatabase = 'weed.json';
                     updateActiveDbButton();
-                    loadDatabaseData();
+                    switchDatabase();
+                }
+            });
+            
+            cokeDbBtn.addEventListener('click', function() {
+                if (currentDatabase !== 'coke.json') {
+                    currentDatabase = 'coke.json';
+                    updateActiveDbButton();
+                    switchDatabase();
                 }
             });
 
-            // Update active database button
+            // Update active database button with smooth transitions
             function updateActiveDbButton() {
+                // Remove active class from all buttons
                 methDbBtn.classList.remove('active');
                 weedDbBtn.classList.remove('active');
+                cokeDbBtn.classList.remove('active');
                 
-                // Reset styles
+                // Reset styles with opacity for non-active buttons
                 methDbBtn.style.opacity = '0.8';
                 weedDbBtn.style.opacity = '0.8';
+                cokeDbBtn.style.opacity = '0.8';
                 
+                // Set default background color for all buttons
+                methDbBtn.style.backgroundColor = 'var(--primary-color)';
+                weedDbBtn.style.backgroundColor = 'var(--primary-color)';
+                cokeDbBtn.style.backgroundColor = 'var(--primary-color)';
+                
+                // Add active class and full opacity to the selected button
                 if (currentDatabase === 'data.json') {
                     methDbBtn.classList.add('active');
                     methDbBtn.style.opacity = '1';
-                    methDbBtn.style.fontWeight = 'bold';
-                } else {
+                    methDbBtn.style.backgroundColor = 'var(--secondary-color)';
+                } else if (currentDatabase === 'weed.json') {
                     weedDbBtn.classList.add('active');
                     weedDbBtn.style.opacity = '1';
-                    weedDbBtn.style.fontWeight = 'bold';
+                    weedDbBtn.style.backgroundColor = 'var(--accent-color)';
+                } else if (currentDatabase === 'coke.json') {
+                    cokeDbBtn.classList.add('active');
+                    cokeDbBtn.style.opacity = '1';
+                    cokeDbBtn.style.backgroundColor = 'var(--primary-color)';
                 }
             }
-
-            // Load database data
-            function loadDatabaseData() {
-                // Clear previous data
-                drugsData = [];
-                allEffects = new Set();
-                activeEffectFilters = new Set();
+            
+            // Preload all database files
+            function preloadDatabases() {
+                const databases = ['data.json', 'weed.json', 'coke.json'];
+                const promises = [];
                 
-                // Reset UI elements
-                document.getElementById('effectsList').innerHTML = '';
-                document.getElementById('drugTabs').innerHTML = `
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="all-drugs-tab" data-bs-toggle="tab" data-bs-target="#all-drugs-content" type="button" role="tab" aria-controls="all-drugs-content" aria-selected="true">
-                            All Drugs
-                        </button>
-                    </li>
-                `;
-                document.getElementById('drugTabsContent').innerHTML = `
-                    <div class="tab-pane fade show active" id="all-drugs-content" role="tabpanel" aria-labelledby="all-drugs-tab">
-                        <div class="row" id="drugsContainer">
-                            <div class="col-12 text-center">
-                                <div class="alert alert-info">Loading drug data...</div>
+                databases.forEach(db => {
+                    const promise = fetch(db)
+                        .then(response => response.json())
+                        .then(data => {
+                            databaseCache[db] = data;
+                            console.log(`Preloaded ${db}`);
+                        })
+                        .catch(error => {
+                            console.error(`Error preloading ${db}:`, error);
+                        });
+                    
+                    promises.push(promise);
+                });
+                
+                // When all databases are loaded, display the initial database
+                Promise.all(promises)
+                    .then(() => {
+                        // Initial data load after preloading
+                        switchDatabase();
+                    })
+                    .catch(error => {
+                        console.error('Error during preloading:', error);
+                        // Fallback to loading just the current database
+                        loadDatabaseData();
+                    });
+            }
+            
+            // Switch to a different database using the cached data
+            function switchDatabase() {
+                // Fade out the current content
+                const drugsContainer = document.getElementById('drugsContainer');
+                drugsContainer.style.opacity = '0';
+                
+                // Reset UI elements after a short delay for smooth transition
+                setTimeout(() => {
+                    document.getElementById('effectsList').innerHTML = '';
+                    document.getElementById('drugTabs').innerHTML = `
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="all-drugs-tab" data-bs-toggle="tab" data-bs-target="#all-drugs-content" type="button" role="tab" aria-controls="all-drugs-content" aria-selected="true">
+                                All Drugs
+                            </button>
+                        </li>
+                    `;
+                    document.getElementById('drugTabsContent').innerHTML = `
+                        <div class="tab-pane fade show active" id="all-drugs-content" role="tabpanel" aria-labelledby="all-drugs-tab">
+                            <div class="row" id="drugsContainer">
+                                <div class="col-12 text-center">
+                                    <div class="alert alert-info">Loading drug data...</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
-
-                // Fetch the JSON data
-                fetch(currentDatabase)
-                    .then(response => response.json())
-                    .then(data => {
-                        drugsData = data;
+                    `;
+                    
+                    // Check if we have cached data for this database
+                    if (databaseCache[currentDatabase]) {
+                        // Use cached data
+                        drugsData = databaseCache[currentDatabase];
+                        
+                        // Clear previous effects
+                        allEffects = new Set();
+                        activeEffectFilters = new Set();
                         
                         // Extract all unique effects
                         drugsData.forEach(drug => {
@@ -635,6 +769,49 @@
                         
                         // Display drugs
                         displayDrugs();
+                        
+                        // Fade in the new content
+                        setTimeout(() => {
+                            const drugsContainer = document.getElementById('drugsContainer');
+                            drugsContainer.style.opacity = '1';
+                        }, 50);
+                    } else {
+                        // Fallback to loading from server if cache is empty
+                        loadDatabaseData();
+                    }
+                }, 300); // Match this delay with the CSS transition time
+            }
+
+            // Load database data with smooth transitions (fallback method)
+            function loadDatabaseData() {
+                // Fetch the JSON data
+                fetch(currentDatabase)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Cache the data for future use
+                        databaseCache[currentDatabase] = data;
+                        drugsData = data;
+                        
+                        // Extract all unique effects
+                        drugsData.forEach(drug => {
+                            if (drug.Effects && drug.Effects !== 'NaN') {
+                                const effectsArray = drug.Effects.split(', ');
+                                effectsArray.forEach(effect => allEffects.add(effect));
+                            }
+                        });
+                        
+                        // Populate effects filter
+                        populateEffectsFilter();
+                        
+                        // Create drug tabs
+                        createDrugTabs();
+                        
+                        // Fade in the new content
+                        const drugsContainer = document.getElementById('drugsContainer');
+                        drugsContainer.style.opacity = '1';
+                        
+                        // Display drugs
+                        displayDrugs();
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
@@ -646,8 +823,8 @@
                     });
             }
 
-            // Initial data load
-            loadDatabaseData();
+            // Start by preloading all databases
+            preloadDatabases();
                 
             // Create tabs for each drug
             function createDrugTabs() {

@@ -1,0 +1,100 @@
+[
+  {
+    "Drug Name": "AfghanMint",
+    "Price": 177,
+    "Effects": "Eurphoric, Toxic",
+    "Addictiveness": "63%",
+    "Recipe": "AspenCake + Gasoline"
+  },
+  {
+    "Drug Name": "ashtonsdream",
+    "Price": 429,
+    "Effects": "Toxic, Foggy, Bright-Eyed, Long faced, Zombifying",
+    "Addictiveness": "100%",
+    "Recipe": "DreamRhino + Battery"
+  },
+  {
+    "Drug Name": "AspenCake",
+    "Price": 183,
+    "Effects": "Energizing",
+    "Addictiveness": "74%",
+    "Recipe": "Cocaine + Cuke"
+  },
+  {
+    "Drug Name": "AspenStink",
+    "Price": 267,
+    "Effects": "Paranoia, Sneaky, Anti-Gravity",
+    "Addictiveness": "100%",
+    "Recipe": "ShinyMint + Paracetamol"
+  },
+  {
+    "Drug Name": "DreamRhino",
+    "Price": 309,
+    "Effects": "Eurphoric, Toxic, Foggy, Long faced",
+    "Addictiveness": "100%",
+    "Recipe": "ShinyFruit + Mega Bean"
+  },
+  {
+    "Drug Name": "FruityAssblaster",
+    "Price": 201,
+    "Effects": "Slippery",
+    "Addictiveness": "70%",
+    "Recipe": "Cocaine + Motor Oil"
+  },
+  {
+    "Drug Name": "kingscastle",
+    "Price": 495,
+    "Effects": "Calming, Sneaky, Bright-Eyed, Tropic Thunder, Long faced",
+    "Addictiveness": "100%",
+    "Recipe": "asthonsdream + Paracetamol"
+  },
+  {
+    "Drug Name": "NightmareCum",
+    "Price": 375,
+    "Effects": "Calming, Toxic, Bright-Eyed, Tropic Thunder",
+    "Addictiveness": "100%",
+    "Recipe": "StrawberryFuel + Battery"
+  },
+  {
+    "Drug Name": "SexySmegma",
+    "Price": 500,
+    "Effects": "Calming, Toxic, Bright-Eyed, Tropic Thunder, Long faced",
+    "Addictiveness": "100%",
+    "Recipe": "NightmareCum + Horsesemen"
+  },
+  {
+    "Drug Name": "ShinyFruit",
+    "Price": 255,
+    "Effects": "Eurphoric, Toxic, Long faced",
+    "Addictiveness": "100%",
+    "Recipe": "AfghanMint + Horsesemen"
+  },
+  {
+    "Drug Name": "ShinyMint",
+    "Price": 201,
+    "Effects": "Munchies, Energizing",
+    "Addictiveness": "83%",
+    "Recipe": "FruityAssblaster + Cuke"
+  },
+  {
+    "Drug Name": "StrawberryFuel",
+    "Price": 315,
+    "Effects": "Calming, Toxic, Tropic Thunder, Anti-Gravity",
+    "Addictiveness": "100%",
+    "Recipe": "AspenStink + Gasoline"
+  },
+  {
+    "Drug Name": "Cocaine",
+    "Price": 150,
+    "Effects": "None",
+    "Addictiveness": "40%",
+    "Recipe": "Coca Seed"
+  },
+  {
+    "Drug Name": "AspenGhost",
+    "Price": 150,
+    "Effects": "Toxic",
+    "Addictiveness": "40%",
+    "Recipe": "Cocaine + Gasoline"
+  }
+]
