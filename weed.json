@@ -1,135 +1,184 @@
 [
-    {
-      "Drug Name": "OGKush",
-      "Price": 12,
-      "Effects": "Calming",
-      "Addictiveness": "0%",
-      "Recipe": ""
-    },
-    {
-      "Drug Name": "SourDiesel",
-      "Price": 40,
-      "Effects": "Refreshing",
-      "Addictiveness": "10%",
-      "Recipe": ""
-    },
-    {
-      "Drug Name": "GreenCrack",
-      "Price": 43,
-      "Effects": "Energizing",
-      "Addictiveness": "34%",
-      "Recipe": ""
-    },
-    {
-      "Drug Name": "GranddaddyPurple",
-      "Price": 44,
-      "Effects": "Sedating",
-      "Addictiveness": "0%",
-      "Recipe": ""
-    },
-    {
-      "Drug Name": "AfghanUrkle",
-      "Price": 74,
-      "Effects": "Gingeritis, Laxative, Athletic, Shrinking",
-      "Addictiveness": "100%",
-      "Recipe": "SlimyDick + Energy Drink"
-    },
-    {
-      "Drug Name": "AspenDeath",
-      "Price": 52,
-      "Effects": "Energizing, Calorie-Dense",
-      "Addictiveness": "49%",
-      "Recipe": "GreenCrack + Donut"
-    },
-    {
-      "Drug Name": "AspenSmegma",
-      "Price": 52,
-      "Effects": "Energizing, Sedating",
-      "Addictiveness": "39%",
-      "Recipe": "GreenCrack + Flu Medicine"
-    },
-    {
-      "Drug Name": "BigBud",
-      "Price": 60,
-      "Effects": "Sedating, Tropic Thunder",
-      "Addictiveness": "85%",
-      "Recipe": "GranddaddyPurple + Viagra"
-    },
-    {
-      "Drug Name": "DarkCake",
-      "Price": 57,
-      "Effects": "Sedating, Foggy",
-      "Addictiveness": "15%",
-      "Recipe": "GranddaddyPurple + Mega Bean"
-    },
-    {
-      "Drug Name": "DreamBalls",
-      "Price": 54,
-      "Effects": "Sedating, Caloire-Dense",
-      "Addictiveness": "15%",
-      "Recipe": "GranddaddyPurple + Donut"
-    },
-    {
-      "Drug Name": "DreamSmegma",
-      "Price": 46,
-      "Effects": "Disorienting, Laxative, Athletic",
-      "Addictiveness": "75%",
-      "Recipe": "SuperFruit + Energy Drink"
-    },
-    {
-      "Drug Name": "fuck wipe fantises",
-      "Price": 79,
-      "Effects": "Gingeritis, Sedating, Spicy, Jennerising",
-      "Addictiveness": "100%",
-      "Recipe": "SuperDiamond + Iodine"
-    },
-    {
-      "Drug Name": "GorrilaAss",
-      "Price": 58,
-      "Effects": "Sedating, Bright-Eyed",
-      "Addictiveness": "25%",
-      "Recipe": "GranddaddyPurple + Battery"
-    },
-    {
-      "Drug Name": "MegaDiesel",
-      "Price": 57,
-      "Effects": "Sedating, Spicy",
-      "Addictiveness": "71%",
-      "Recipe": "GranddaddyPurple + Chili"
-    },
-    {
-      "Drug Name": "SlimyDick",
-      "Price": 59,
-      "Effects": "Focused, Gingeritis, Laxative, Athletic",
-      "Addictiveness": "86%",
-      "Recipe": "DreamSmegma + Banana"
-    },
-    {
-      "Drug Name": "StrawberryShart",
-      "Price": 50,
-      "Effects": "Munchies, Athletic",
-      "Addictiveness": "75%",
-      "Recipe": "GranddaddyPurple + Energy Drink"
-    },
-    {
-      "Drug Name": "SuperDiamond",
-      "Price": 64,
-      "Effects": "Gingeritis, Sedating, Spicy",
-      "Addictiveness": "71%",
-      "Recipe": "TokyoRhino + Chili"
-    },
-    {
-      "Drug Name": "SuperFruit",
-      "Price": 64,
-      "Effects": "Foggy, Glowing",
-      "Addictiveness": "62%",
-      "Recipe": "OGKush + Mega Bean"
-    },
-    {
-      "Drug Name": "TokyoRhino",
-      "Price": 51,
-      "Effects": "Gingeritis, Sedating",
-      "Addictiveness": "5%",
-      "Recipe": "GranddaddyPurple + Banana"
-    }
-  ]
+  {
+    "Drug Name": "OGKush",
+    "Price": 12,
+    "Effects": "Calming",
+    "Addictiveness": "0%",
+    "Recipe": ""
+  },
+  {
+    "Drug Name": "SourDiesel",
+    "Price": 40,
+    "Effects": "Refreshing",
+    "Addictiveness": "10%",
+    "Recipe": ""
+  },
+  {
+    "Drug Name": "GreenCrack",
+    "Price": 43,
+    "Effects": "Energizing",
+    "Addictiveness": "34%",
+    "Recipe": ""
+  },
+  {
+    "Drug Name": "GranddaddyPurple",
+    "Price": 44,
+    "Effects": "Sedating",
+    "Addictiveness": "0%",
+    "Recipe": ""
+  },
+  {
+    "Drug Name": "AfghanUrkle",
+    "Price": 74,
+    "Effects": "Gingeritis, Laxative, Athletic, Shrinking",
+    "Addictiveness": "100%",
+    "Recipe": "SlimyDick + Energy Drink"
+  },
+  {
+    "Drug Name": "AspenDeath",
+    "Price": 52,
+    "Effects": "Energizing, Calorie-Dense",
+    "Addictiveness": "49%",
+    "Recipe": "GreenCrack + Donut"
+  },
+  {
+    "Drug Name": "AspenSmegma",
+    "Price": 52,
+    "Effects": "Energizing, Sedating",
+    "Addictiveness": "39%",
+    "Recipe": "GreenCrack + Flu Medicine"
+  },
+  {
+    "Drug Name": "BigBud",
+    "Price": 60,
+    "Effects": "Sedating, Tropic Thunder",
+    "Addictiveness": "85%",
+    "Recipe": "GranddaddyPurple + Viagra"
+  },
+  {
+    "Drug Name": "DarkCake",
+    "Price": 57,
+    "Effects": "Sedating, Foggy",
+    "Addictiveness": "15%",
+    "Recipe": "GranddaddyPurple + Mega Bean"
+  },
+  {
+    "Drug Name": "DreamBalls",
+    "Price": 54,
+    "Effects": "Sedating, Caloire-Dense",
+    "Addictiveness": "15%",
+    "Recipe": "GranddaddyPurple + Donut"
+  },
+  {
+    "Drug Name": "DreamSmegma",
+    "Price": 46,
+    "Effects": "Disorienting, Laxative, Athletic",
+    "Addictiveness": "75%",
+    "Recipe": "SuperFruit + Energy Drink"
+  },
+  {
+    "Drug Name": "fuck wipe fantises",
+    "Price": 79,
+    "Effects": "Gingeritis, Sedating, Spicy, Jennerising",
+    "Addictiveness": "100%",
+    "Recipe": "SuperDiamond + Iodine"
+  },
+  {
+    "Drug Name": "GorrilaAss",
+    "Price": 58,
+    "Effects": "Sedating, Bright-Eyed",
+    "Addictiveness": "25%",
+    "Recipe": "GranddaddyPurple + Battery"
+  },
+  {
+    "Drug Name": "MegaDiesel",
+    "Price": 57,
+    "Effects": "Sedating, Spicy",
+    "Addictiveness": "71%",
+    "Recipe": "GranddaddyPurple + Chili"
+  },
+  {
+    "Drug Name": "SlimyDick",
+    "Price": 59,
+    "Effects": "Focused, Gingeritis, Laxative, Athletic",
+    "Addictiveness": "86%",
+    "Recipe": "DreamSmegma + Banana"
+  },
+  {
+    "Drug Name": "StrawberryShart",
+    "Price": 50,
+    "Effects": "Munchies, Athletic",
+    "Addictiveness": "75%",
+    "Recipe": "GranddaddyPurple + Energy Drink"
+  },
+  {
+    "Drug Name": "SuperDiamond",
+    "Price": 64,
+    "Effects": "Gingeritis, Sedating, Spicy",
+    "Addictiveness": "71%",
+    "Recipe": "TokyoRhino + Chili"
+  },
+  {
+    "Drug Name": "SuperFruit",
+    "Price": 64,
+    "Effects": "Foggy, Glowing",
+    "Addictiveness": "62%",
+    "Recipe": "OGKush + Mega Bean"
+  },
+  {
+    "Drug Name": "TokyoRhino",
+    "Price": 51,
+    "Effects": "Gingeritis, Sedating",
+    "Addictiveness": "5%",
+    "Recipe": "GranddaddyPurple + Banana"
+  },
+  {
+    "Drug Name": "AfghanPuke",
+    "Price": 66,
+    "Effects": "Gingeritis, Sedating, Jennerising",
+    "Addictiveness": "39%",
+    "Recipe": "TokyoRhino + Iodine"
+  },
+  {
+    "Drug Name": "DreamCum",
+    "Price": 56,
+    "Effects": "Energizing, Spicy",
+    "Addictiveness": "100%",
+    "Recipe": "GreenCrack + Chili"
+  },
+  {
+    "Drug Name": "SlimyCrack",
+    "Price": "66",
+    "Effects": "Energizing, Spicy, Balding",
+    "Addictiveness": "100%",  
+    "Recipe": "DreamCum + Mouth Wash"
+  },
+  {
+    "Drug Name": "CaliforniaAss",
+    "Price": "68",
+    "Effects": "Paranoia, Sneaky, Balding, Bright-Eyed",
+    "Addictiveness": "57%",  
+    "Recipe": "SlimyCrack + Paracetamol"
+  },
+  {
+    "Drug Name": "GirlScoutDurkle",
+    "Price": "83",
+    "Effects": "Paranoia, Sneaky, Balding, Bright-Eyed, Jennerising",
+    "Addictiveness": "92%",  
+    "Recipe": "CaliforniaAss + Iodine"
+  },
+  {
+    "Drug Name": "FatSplooge",
+    "Price": "90",
+    "Effects": "Paranoia, Sneaky, Gingeritis, Balding, Bright-Eyed, Jennerising",
+    "Addictiveness": "92%",  
+    "Recipe": "GirlScoutDurkle + Banana"
+  },
+  {
+    "Drug Name": "FatShart",
+    "Price": "106",
+    "Effects": "Paranoia, Refreshing, Sneaky, Balding, Bright-Eyed, Jennerising, Long faced",
+    "Addictiveness": "100%",  
+    "Recipe": "FatSplooge + HorseSemen"
+  }
+]
