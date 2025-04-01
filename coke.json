@@ -96,5 +96,82 @@
     "Effects": "Toxic",
     "Addictiveness": "40%",
     "Recipe": "Cocaine + Gasoline"
+  },
+  {
+    "Drug Name": "BigThunderfuck",
+    "Price": 231,
+    "Effects": "Energizing, Athletic",
+    "Addictiveness": "100%",
+    "Recipe": "ShinyMint + Cuke"
+  },
+  {
+    "Drug Name": "PurpleExpress",
+    "Price": 282,
+    "Effects": "Calming, Toxic, Athletic, Tropic thunder",
+    "Addictiveness": "100%",
+    "Recipe": "SlimySmegma + Gasoline"
+  },
+  {
+    "Drug Name": "SlimySmegma",
+    "Price": 234,
+    "Effects": "Paranoia, Sneaky, Athletic",
+    "Addictiveness": "100%",
+    "Recipe": "BigThunderfuck + Paracetamol"
+  },
+  {
+    "Drug Name": "TokyoShart",
+    "Price": 342,
+    "Effects": "Calming, Euphoric, Energizing, Athletic, Tropic thunder",
+    "Addictiveness": "100%",
+    "Recipe": "PurpleExpress + Cuke"
+  },
+  {
+    "Drug Name": "StrawberryDick",
+    "Price": 462,
+    "Effects": "Calming, Energizing, Athletic, Bright-Eyed, Tropic thunder",
+    "Addictiveness": "100%",
+    "Recipe": "TokyoShart + Battery"
+  },
+  {
+    "Drug Name": "BioCrystal",
+    "Price": 540,
+    "Effects": "Calming, Energizing, Athletic, Bright-Eyed, Tropic thunder",
+    "Addictiveness": "100%",
+    "Recipe": "StrawberryDick + Horsesemen"
+  },
+  {
+    "Drug Name": "NightmareExpress",
+    "Price": 700,
+    "Effects": "Laxative, Foggy, Bright-Eyed, Tropic thunder, Glowing",
+    "Addictiveness": "100%",
+    "Recipe": "BioCrystal + Mega Bean"
+  },
+  {
+    "Drug Name": "CaliforniaPuke",
+    "Price": 375,
+    "Effects": "Calming, Euphoric, Energizing, Tropic thunder, Anti-gravity",
+    "Addictiveness": "100%",
+    "Recipe": "StrawberryFuel + Cuke"
+  },
+  {
+    "Drug Name": "BananaMcLovin",
+    "Price": 495,
+    "Effects": "Calming, Energizing, Bright-Eyed, Tropic thunder, Anti-gravity",
+    "Addictiveness": "100%",
+    "Recipe": "CaliforniaPuke + Battery"
+  },
+  {
+    "Drug Name": "StinkyPunch",
+    "Price": 573,
+    "Effects": "Calming, Energizing, Bright-Eyed, Tropic thunder, Long faced",
+    "Addictiveness": "100%",
+    "Recipe": "BananaMcLovin + Horsesemen"
+  },
+  {
+    "Drug Name": "DreamGhost",
+    "Price": 700,
+    "Effects": "Foggy, Bright-Eyed, Tropic thunder, Glowing, Long faced",
+    "Addictiveness": "100%",
+    "Recipe": "StinkyPunch + Mega Bean"
   }
 ]
